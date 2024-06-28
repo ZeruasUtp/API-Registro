@@ -1,18 +1,25 @@
-// app.js
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const authMiddleware = require('./middleware/authMiddleware');
 const sequelize = require('./config/db');
 
 // Crear una instancia de la aplicación Express
 const app = express();
 
-// Middleware para parsear JSON
+app.use(cors());
 app.use(bodyParser.json());
 
-// Rutas
-app.use('/api/users', userRoutes);
+app.use('/api', authRoutes);
+
+app.use('/api', userRoutes); 
+
+app.get('/dashboard', authMiddleware, (req, res) => {
+  res.json({ message: `Welcome ${req.userRole}` });
+});
 
 // Configurar el puerto
 const PORT = process.env.PORT || 5000;

@@ -1,18 +1,29 @@
-// controllers/userController.js
-const UserService = require('../services/userService');
+const User = require('../models/userModel');
 
-class UserController {
-  static async registerUser(req, res) {
-    const { nombre, email, contraseña, confirma } = req.body;
+const userController = {
+  register: async (req, res) => {
+    const { nombre, email, last_name, contrasena, telefono, rol_id } = req.body;
+
+    if (!nombre || !email || !last_name || !contrasena || !telefono || !rol_id) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
 
     try {
-      const result = await UserService.registerUser({ nombre, email, contraseña, confirma });
-      res.status(201).json(result);
-    } catch (err) {
-      console.error('Server error:', err);
-      res.status(400).json({ message: err.message });
+      const newUser = await User.create({
+        nombre,
+        email,
+        last_name,
+        contrasena,
+        telefono,
+        rol_id,
+      });
+
+      res.status(201).json({ message: 'User created successfully', userId: newUser.usuario_id });
+    } catch (error) {
+      console.error('Error creating user:', error);
+      res.status(500).json({ error: 'Error creating user' });
     }
   }
-}
+};
 
-module.exports = UserController;
+module.exports = userController;

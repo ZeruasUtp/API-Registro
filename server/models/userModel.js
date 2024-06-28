@@ -1,9 +1,9 @@
-// models/userModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const bcrypt = require('bcryptjs');
 
-const User = sequelize.define('User', {
-  id: {
+const User = sequelize.define('Usuarios', {
+  usuario_id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
@@ -17,13 +17,25 @@ const User = sequelize.define('User', {
     allowNull: false,
     unique: true,
   },
-  contraseña: {
+  contrasena: {
     type: DataTypes.STRING,
     allowNull: false,
+    set(value) {
+      const hashedPassword = bcrypt.hashSync(value, 10);
+      this.setDataValue('contrasena', hashedPassword);
+    },
+  },
+  rol_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  membresia_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
 }, {
-  tableName: 'usuarios', // Nombre de la tabla en la base de datos
-  timestamps: false, // Desactiva los timestamps si no los necesitas
+  tableName: 'Usuarios',
+  timestamps: false,
 });
 
 module.exports = User;

@@ -76,5 +76,34 @@ li {
         <p><strong>Ejemplo de uso:</strong></p>
         <code>curl -X POST -H "Content-Type: application/json" -d '{"newPassword": "nuevaContraseña123"}' http://localhost:5000/api/reset-password/abc123token</code>
     </section>
+
+    <section>
+        <h2>Endpoint: Eliminar Usuario (delete)</h2>
+        <p><strong>Método HTTP:</strong> DELETE</p>
+        <p><strong>URL:</strong> /api/:id</p>
+        <p><strong>Descripción del flujo:</strong></p>
+        <ul>
+            <li>Búsqueda del usuario por ID.</li>
+            <li>Eliminación del usuario si es encontrado.</li>
+            <li>Respuesta indicando el éxito de la operación.</li>
+        </ul>
+        <p><strong>Ejemplo de uso:</strong></p>
+        <code>curl -X DELETE http://localhost:5000/api/123</code>
+    </section>
+    
+    <section>
+        <h2>Endpoint: Actualizar Usuario (update)</h2>
+        <p><strong>Método HTTP:</strong> PUT</p>
+        <p><strong>URL:</strong> /api/:id</p>
+        <p><strong>Cuerpo de la solicitud:</strong> { "name": "Nuevo Nombre", "email": "nuevo@example.com" }</p>
+        <p><strong>Descripción del flujo:</strong></p>
+        <ul>
+            <li>Búsqueda del usuario por ID.</li>
+            <li>Actualización de la información del usuario.</li>
+            <li>Respuesta con los datos del usuario actualizado.</li>
+        </ul>
+        <p><strong>Ejemplo de uso:</strong></p>
+        <code>curl -X PUT -H "Content-Type: application/json" -d '{"name": "Nuevo Nombre", "email": "nuevo@example.com"}' http://localhost:5000/api/123</code>
+    </section>
 </body>
 </html>

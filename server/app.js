@@ -17,6 +17,9 @@ app.use('/api', authRoutes);
 
 app.use('/api', userRoutes); 
 
+app.use('/doc-forgot-password', express.static('public'));
+
+
 app.get('/dashboard', authMiddleware, (req, res) => {
   res.json({ message: `Welcome ${req.userRole}` });
 });

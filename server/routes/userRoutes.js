@@ -9,6 +9,7 @@ router.post('/forgot-password', userController.forgotPassword);
 router.post('/reset-password/:token', userController.resetPassword);
 router.delete('/:id', userController.delete);
 router.patch('/:id', userController.update);
-
+router.get('/:id', userController.getById);
+router.get('/', userController.getAll);
 
 module.exports = router;

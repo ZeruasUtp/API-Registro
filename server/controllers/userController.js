@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
+const { get } = require("http");
 
 const userController = {
   register: async (req, res) => {
@@ -187,6 +188,32 @@ const userController = {
     } catch (error) {
       console.error("Error updating user:", error);
       res.status(500).json({ error: "Error updating user" });
+    }
+  },
+
+  getAll: async (req, res) => {
+    try {
+      const users = await User.findAll();
+      res.status(200).json(users);
+    } catch (error) {
+      console.error("Error getting users:", error);
+      res.status(500).json({ error: "Error getting users" });
+    }
+  },
+
+  getById: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const user = await User.findByPk(id);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      res.status(200).json(user);
+    } catch (error) {
+      console.error("Error getting user:", error);
+      res.status(500).json({ error: "Error getting user" });
     }
   },
 };
